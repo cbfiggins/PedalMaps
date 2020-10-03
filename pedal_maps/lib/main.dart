@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'distanceTraveled.dart';
 //import 'second.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        //'/SecondPage': (context) => SecondPage(),
+        '/distanceTraveled': (context) => distanceTraveled(),
       },
       title: 'Pedal Maps',
       theme: ThemeData(
@@ -79,7 +80,7 @@ class PageSelectButton extends StatelessWidget {
         disabledColor: Colors.grey,
         disabledTextColor: Colors.black,
         onPressed: (){
-          Navigator.pushNamed(context, route);
+          Navigator.pushNamed(context, '/distanceTraveled');
         },
       )
     );
