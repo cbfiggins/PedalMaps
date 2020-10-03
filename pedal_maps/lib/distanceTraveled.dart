@@ -11,6 +11,7 @@ class _distanceTraveled extends State<distanceTraveled> {
   var minutesStr = '00';
   var secondsStr = '00';
   var timerStream, timerSubscription;
+  var start_check = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
+                    if (start_check == false){
                     timerStream = stopWatchStream();
                     timerSubscription = timerStream.listen((int newTick) {
                       setState(() {
@@ -55,10 +57,14 @@ class _distanceTraveled extends State<distanceTraveled> {
                             .floor()
                             .toString()
                             .padLeft(2, '0');
-                        secondsStr =
-                            (newTick % 60).floor().toString().padLeft(2, '0');
+                        secondsStr = (newTick % 60)
+                            .floor()
+                            .toString()
+                            .padLeft(2, '0');
                       });
                     });
+                    start_check = true;
+                    }
                   },
                 ),
                 SizedBox(width: 30.0),
@@ -81,6 +87,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                       minutesStr = '00';
                       secondsStr = '00';
                     });
+                    start_check = false;
                   },
                 ),
               ],
