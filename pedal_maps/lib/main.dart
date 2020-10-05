@@ -51,16 +51,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  Position _currentPosition;
+  Position _lastPosition;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  void _GetLocation() {
+    setState(() async {
+      _lastPosition = _currentPosition;
+      _currentPosition =
+          await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     });
   }
 
@@ -99,17 +97,28 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
+              'Your Current Position is:',
             ),
             Text(
-              '$_counter',
+              _currentPosition.latitude.toString() +
+                  ', ' +
+                  _currentPosition.longitude.toString(),
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Text(
+              'Your Last Position was:',
+            ),
+            Text(
+              _lastPosition.latitude.toString() +
+                  ', ' +
+                  _lastPosition.longitude.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _GetLocation,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
