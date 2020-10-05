@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'distanceTraveled.dart';
 //import 'second.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        //'/SecondPage': (context) => SecondPage(),
+        '/distanceTraveled': (context) => distanceTraveled(),
       },
       title: 'Pedal Maps',
       theme: ThemeData(
@@ -46,7 +47,7 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             LogoWidget(),
             SizedBox(height: 50),
-            PageSelectButton(buttonText: "Track Ride", /*route: '/SecondPage'*/), //add page route here
+            PageSelectButton(buttonText: "Track Ride", route: '/distanceTraveled'),
             SizedBox(height: 10,),
             //PageSelectButton(buttonText: "Nearby Trails"),
             SizedBox(height: 10,),
