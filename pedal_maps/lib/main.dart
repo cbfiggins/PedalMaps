@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             LogoWidget(),
             SizedBox(height: 50),
-            PageSelectButton(buttonText: "Track Ride", /*route: '/SecondPage'*/), //add page route here
+            PageSelectButton(buttonText: "Track Ride", route: '/distanceTraveled'),
             SizedBox(height: 10,),
             //PageSelectButton(buttonText: "Nearby Trails"),
             SizedBox(height: 10,),
@@ -80,7 +80,7 @@ class PageSelectButton extends StatelessWidget {
         disabledColor: Colors.grey,
         disabledTextColor: Colors.black,
         onPressed: (){
-          Navigator.pushNamed(context, '/distanceTraveled');
+          Navigator.pushNamed(context, route);
         },
       )
     );

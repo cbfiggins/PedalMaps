@@ -17,7 +17,7 @@ class _distanceTraveled extends State<distanceTraveled> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Track a Ride"),
+          title: Text("Track Ride"),
           backgroundColor: Colors.red,
       ),
       backgroundColor: Colors.blueGrey,
