@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Your Current Position is:',
+              'Your Current Position is: ',
             ),
             Text(
               _currentPosition.latitude.toString() +
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             Text(
-              'Your Last Position was:',
+              '\nYour Last Position was: ',
             ),
             Text(
               _lastPosition.latitude.toString() +
@@ -114,12 +114,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   _lastPosition.longitude.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
+            Text(
+              '\nYou Travelled a distance of ' +
+                  distanceBetween(
+                          _lastPosition.latitude,
+                          _lastPosition.longitude,
+                          _currentPosition.latitude,
+                          _currentPosition.longitude)
+                      .toString() +
+                  'meters',
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _GetLocation,
-        tooltip: 'Increment',
+        tooltip: 'Get Location',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
