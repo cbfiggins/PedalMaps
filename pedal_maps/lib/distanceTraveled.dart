@@ -106,16 +106,25 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    timerSubscription.cancel();
-                    timerStream = null;
-                    setState(() {
-                      hoursStr = '00';
-                      minutesStr = '00';
-                      secondsStr = '00';
-                      prevTick = 0;
-                    });
-                    start_pressed = false;
-                    pause_pressed = false;
+                    if (timerStream != null) {
+                      timerSubscription.cancel();
+                      timerStream = null;
+                      setState(() {
+                        hoursStr = '00';
+                        minutesStr = '00';
+                        secondsStr = '00';
+                        prevTick = 0;
+                      });
+                      start_pressed = false;
+                      pause_pressed = false;
+                    }else{
+                      setState(() {
+                        hoursStr = '00';
+                        minutesStr = '00';
+                        secondsStr = '00';
+                        prevTick = 0;
+                      });
+                    }
                   },
                 ),
               ], // RowChildren
