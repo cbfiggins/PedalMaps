@@ -10,6 +10,7 @@ Stream<int> stopWatchStream() {
   int counter = 0;
 
   //check timer is running, if so stop process, reset timer and counter
+
   void stopTimer() {
     if (timer != null) {
       timer.cancel();
