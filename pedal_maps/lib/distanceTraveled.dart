@@ -16,6 +16,83 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   int prevTick = 0;
 
+  void StopWatchStart(){ //function that affects stopwatch when start button pressed
+    if (start_pressed == false){
+      timerStream = stopWatchStream();
+      timerSubscription = timerStream.listen((int newTick) {
+        setState(() {
+          hoursStr = ((newTick / (60 * 60)) % 60)
+              .floor()
+              .toString()
+              .padLeft(2, '0');
+          minutesStr = ((newTick / 60) % 60)
+              .floor()
+              .toString()
+              .padLeft(2, '0');
+          secondsStr = (newTick % 60)
+              .floor()
+              .toString()
+              .padLeft(2, '0');
+          prevTick = newTick;
+        });
+      });
+      start_pressed = true;
+
+    }
+    if(start_pressed == true && pause_pressed == true){
+      timerStream = stopWatchStream();
+      timerSubscription = timerStream.listen((int newTick) {
+        setState(() {
+          hoursStr = (((prevTick + 1) / (60 * 60)) % 60)
+              .floor()
+              .toString()
+              .padLeft(2, '0');
+          minutesStr = (((prevTick + 1) / 60) % 60)
+              .floor()
+              .toString()
+              .padLeft(2, '0');
+          secondsStr = ((prevTick + 1) % 60)
+              .floor()
+              .toString()
+              .padLeft(2, '0');
+          prevTick = prevTick + 1;
+        });
+      });
+      pause_pressed = false;
+    }
+  }//end StopWatchStart
+
+  void StopWatchReset(){ // function that affects stopwatch when reset button is pressed
+    if (timerStream != null) {
+      timerSubscription.cancel();
+      timerStream = null;
+      setState(() {
+        hoursStr = '00';
+        minutesStr = '00';
+        secondsStr = '00';
+        prevTick = 0;
+      });
+      start_pressed = false;
+      pause_pressed = false;
+    }else{
+      setState(() {
+        hoursStr = '00';
+        minutesStr = '00';
+        secondsStr = '00';
+        prevTick = 0;
+      });
+    }
+  }// end StopWatchReset
+
+  void StopWatchPause(){ // function that affects stopwatch when pause button is pressed
+    if(start_pressed == true){
+      //timerStream.stop();
+      timerSubscription.cancel();
+      timerStream = null;
+      pause_pressed = true;
+    }
+  }// end StopWatchPause
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,49 +125,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    if (start_pressed == false){
-                      timerStream = stopWatchStream();
-                      timerSubscription = timerStream.listen((int newTick) {
-                        setState(() {
-                          hoursStr = ((newTick / (60 * 60)) % 60)
-                              .floor()
-                              .toString()
-                              .padLeft(2, '0');
-                          minutesStr = ((newTick / 60) % 60)
-                              .floor()
-                              .toString()
-                              .padLeft(2, '0');
-                          secondsStr = (newTick % 60)
-                              .floor()
-                              .toString()
-                              .padLeft(2, '0');
-                          prevTick = newTick;
-                        });
-                      });
-                      start_pressed = true;
-
-                    }
-                    if(start_pressed == true && pause_pressed == true){
-                      timerStream = stopWatchStream();
-                      timerSubscription = timerStream.listen((int newTick) {
-                        setState(() {
-                          hoursStr = (((prevTick + 1) / (60 * 60)) % 60)
-                              .floor()
-                              .toString()
-                              .padLeft(2, '0');
-                          minutesStr = (((prevTick + 1) / 60) % 60)
-                              .floor()
-                              .toString()
-                              .padLeft(2, '0');
-                          secondsStr = ((prevTick + 1) % 60)
-                              .floor()
-                              .toString()
-                              .padLeft(2, '0');
-                          prevTick = prevTick + 1;
-                        });
-                      });
-                      pause_pressed = false;
-                    }
+                    StopWatchStart();
                   },
                 ),
                 SizedBox(width: 30.0),
@@ -106,25 +141,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    if (timerStream != null) {
-                      timerSubscription.cancel();
-                      timerStream = null;
-                      setState(() {
-                        hoursStr = '00';
-                        minutesStr = '00';
-                        secondsStr = '00';
-                        prevTick = 0;
-                      });
-                      start_pressed = false;
-                      pause_pressed = false;
-                    }else{
-                      setState(() {
-                        hoursStr = '00';
-                        minutesStr = '00';
-                        secondsStr = '00';
-                        prevTick = 0;
-                      });
-                    }
+                    StopWatchReset();
                   },
                 ),
               ], // RowChildren
@@ -141,12 +158,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 ),
               ),
               onPressed: (){
-                if(start_pressed == true){
-                  //timerStream.stop();
-                  timerSubscription.cancel();
-                  timerStream = null;
-                  pause_pressed = true;
-                }
+                StopWatchPause();
               },
             ),
             SizedBox(height: 30.0)
