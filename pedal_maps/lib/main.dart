@@ -56,9 +56,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _GetLocation() {
     setState(() async {
-      _lastPosition = _currentPosition;
-      _currentPosition =
-          await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      if (_currentPosition == null) {
+        _currentPosition =
+            await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        _lastPosition = _currentPosition;
+      } else {
+        _lastPosition = _currentPosition;
+        _currentPosition =
+            await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      }
     });
   }
 
