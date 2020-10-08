@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 10,),
             PageSelectButton(buttonText: "Map", route: '/map'),
             SizedBox(height: 10,),
-            //PageSelectButton(buttonText: "Saved Rides"),
+            //PageSelectButton(buttonText: "Get location", route: '/GetLocationPage'),
             SizedBox(height: 30),
           ],
         ),
