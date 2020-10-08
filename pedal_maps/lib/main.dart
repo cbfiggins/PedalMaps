@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'distanceTraveled.dart';
-//import 'second.dart';
+import 'map.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/distanceTraveled': (context) => distanceTraveled(),
+        '/map': (context) => map(),
       },
       title: 'Pedal Maps',
       theme: ThemeData(
@@ -49,7 +50,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 50),
             PageSelectButton(buttonText: "Track Ride", route: '/distanceTraveled'),
             SizedBox(height: 10,),
-            //PageSelectButton(buttonText: "Nearby Trails"),
+            PageSelectButton(buttonText: "Map", route: '/map'),
             SizedBox(height: 10,),
             //PageSelectButton(buttonText: "Saved Rides"),
             SizedBox(height: 30),
@@ -103,3 +104,4 @@ class LogoWidget extends StatelessWidget {
     ));
   }
 }
+
