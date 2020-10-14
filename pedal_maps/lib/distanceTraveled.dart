@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'stopwatch.dart';
 import 'map.dart';
+import 'forms.dart';
 
 class distanceTraveled extends StatefulWidget{
   _distanceTraveled createState() => _distanceTraveled();
@@ -110,18 +111,8 @@ class _distanceTraveled extends State<distanceTraveled> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text('Are you sure you want to end the ride?'),
-                            TextFormField(
-                              validator: (value) => value.isNotEmpty ? "You must enter a value" : null,
-                              decoration: InputDecoration(
-                                hintText: "Trail Name"
-                              ),
-                            ),
-                            TextFormField(
-                              validator: (value) => value.isNotEmpty ? "You must enter a value" : null,
-                              decoration: InputDecoration(
-                                  hintText: "Difficulty"
-                              ),
-                            )
+                            buildTrailName(),
+                            buildDifficulty(),
                           ],
                         ),
                       ),
@@ -137,8 +128,10 @@ class _distanceTraveled extends State<distanceTraveled> {
               FlatButton(
                 child: Text('END'),
                 onPressed: () {
-                  StopWatchReset();
-                  Navigator.of(context).pop();
+                  if( _formkey.currentState.validate()){
+                    StopWatchReset();
+                    Navigator.of(context).pop();
+                  }
                 }
               )
             ],
