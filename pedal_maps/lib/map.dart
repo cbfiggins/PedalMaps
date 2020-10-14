@@ -21,6 +21,7 @@ class _map extends State<map> {
 
   @override
   Widget build(BuildContext context) {
+    /*
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -36,6 +37,14 @@ class _map extends State<map> {
             ),
           ),
         ),
+      ),
+    );
+    */
+    return GoogleMap(
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 11.0,
       ),
     );
   }
