@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_flutter: ^0.5.27+3
-  geolocator: ^6.0.0
+  location: ^3.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -52,6 +52,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/PedalMapsLogo.png
+    - assets/markerIcon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
