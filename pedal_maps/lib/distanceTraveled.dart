@@ -2,12 +2,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'map.dart';
 import 'stopwatch.dart';
+import 'map.dart';
+import 'forms.dart';
 
 class distanceTraveled extends StatefulWidget{
   _distanceTraveled createState() => _distanceTraveled();
 }
 
 class _distanceTraveled extends State<distanceTraveled> {
+
+  final _formkey = GlobalKey<FormState>();
+  TrailData _data = TrailData();
+
 
   var hoursStr = '00';
   var minutesStr = '00';
@@ -95,9 +101,60 @@ class _distanceTraveled extends State<distanceTraveled> {
     }
   }// end StopWatchPause
 
+  Future<void> _endRide() async{
+    return showDialog<void>(
+        context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context){
+          return AlertDialog(
+            title: Text('End Ride'),
+            content: Form(
+                    key: _formkey,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Are you sure you want to end the ride?'),
+                            buildTrailName(_data),
+                            buildDifficulty(_data),
+                          ],
+                        ),
+                      ),
+                    ),
+
+            actions: <Widget>[
+              FlatButton(
+                  child: Text('CONTINUE'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }
+              ),
+              FlatButton(
+                child: Text('END'),
+                onPressed: () {
+                  if( _formkey.currentState.validate()){
+                    _formkey.currentState.save();
+                    setTime(_data, hoursStr, minutesStr, secondsStr);
+                    //print('Trail Name: ${_data.trailName}');
+                    //print('Difficulty: ${_data.difficulty}');
+                    //print('Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                    StopWatchReset();
+                    Navigator.of(context).pop();
+                  }
+                }
+              )
+            ],
+          );
+      }
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Track Ride"),
         backgroundColor: Colors.red,
@@ -113,7 +170,6 @@ class _distanceTraveled extends State<distanceTraveled> {
               height: 400,
               padding: new EdgeInsets.only(bottom: 25),
             ),
-            
             Text(
               "$hoursStr:$minutesStr:$secondsStr",
               style: TextStyle(
@@ -143,14 +199,15 @@ class _distanceTraveled extends State<distanceTraveled> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   color: Colors.red,
                   child: Text(
-                    'RESET',
+                    'END',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
                     ),
                   ),
                   onPressed: () {
-                    StopWatchReset();
+                    StopWatchPause();
+                    _endRide();
                   },
                 ),
               ], // RowChildren
