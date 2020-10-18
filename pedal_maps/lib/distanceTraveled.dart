@@ -132,6 +132,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 onPressed: () {
                   if( _formkey.currentState.validate()){
                     _formkey.currentState.save();
+                    setTime(_data, prevTick);
                     StopWatchReset();
                     Navigator.of(context).pop();
                   }
