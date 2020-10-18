@@ -132,9 +132,10 @@ class _distanceTraveled extends State<distanceTraveled> {
                 onPressed: () {
                   if( _formkey.currentState.validate()){
                     _formkey.currentState.save();
-                    setTime(_data, prevTick);
+                    setTime(_data, hoursStr, minutesStr, secondsStr);
                     //print('Trail Name: ${_data.trailName}');
                     //print('Difficulty: ${_data.difficulty}');
+                    //print('Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
                     StopWatchReset();
                     Navigator.of(context).pop();
                   }
