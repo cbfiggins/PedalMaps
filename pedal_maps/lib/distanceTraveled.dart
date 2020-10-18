@@ -10,6 +10,8 @@ class distanceTraveled extends StatefulWidget{
 class _distanceTraveled extends State<distanceTraveled> {
 
   final _formkey = GlobalKey<FormState>();
+  TrailData _data = TrailData();
+
 
   var hoursStr = '00';
   var minutesStr = '00';
@@ -129,6 +131,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 child: Text('END'),
                 onPressed: () {
                   if( _formkey.currentState.validate()){
+                    _formkey.currentState.save();
                     StopWatchReset();
                     Navigator.of(context).pop();
                   }
@@ -140,9 +143,12 @@ class _distanceTraveled extends State<distanceTraveled> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Track Ride"),
         backgroundColor: Colors.red,
