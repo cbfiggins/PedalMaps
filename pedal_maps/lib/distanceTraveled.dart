@@ -113,8 +113,8 @@ class _distanceTraveled extends State<distanceTraveled> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text('Are you sure you want to end the ride?'),
-                            buildTrailName(),
-                            buildDifficulty(),
+                            buildTrailName(_data),
+                            buildDifficulty(_data),
                           ],
                         ),
                       ),
@@ -133,6 +133,8 @@ class _distanceTraveled extends State<distanceTraveled> {
                   if( _formkey.currentState.validate()){
                     _formkey.currentState.save();
                     setTime(_data, prevTick);
+                    //print('Trail Name: ${_data.trailName}');
+                    //print('Difficulty: ${_data.difficulty}');
                     StopWatchReset();
                     Navigator.of(context).pop();
                   }
