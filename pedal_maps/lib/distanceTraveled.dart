@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'map.dart';
 import 'stopwatch.dart';
 import 'map.dart';
 import 'forms.dart';
@@ -160,15 +162,13 @@ class _distanceTraveled extends State<distanceTraveled> {
       backgroundColor: Colors.blueGrey,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 350,
-              height: 350,
               child: map(),
-            ),
-            SizedBox(
-              height: 80,
+              width: 350,
+              height: 400,
+              padding: new EdgeInsets.only(bottom: 25),
             ),
             Text(
               "$hoursStr:$minutesStr:$secondsStr",

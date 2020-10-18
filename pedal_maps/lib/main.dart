@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'distanceTraveled.dart';
 import 'map.dart';
@@ -16,7 +15,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/distanceTraveled': (context) => distanceTraveled(),
-        '/map': (context) => map(),
       },
       title: 'Pedal Maps',
       theme: ThemeData(
@@ -44,13 +42,13 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             LogoWidget(),
             SizedBox(height: 50),
             PageSelectButton(buttonText: "Track Ride", route: '/distanceTraveled'),
             SizedBox(height: 10,),
-            PageSelectButton(buttonText: "Map", route: '/map'),
+            //PageSelectButton(buttonText: "Map", route: '/map'),
             SizedBox(height: 10,),
             //PageSelectButton(buttonText: "Get location", route: '/GetLocationPage'),
             SizedBox(height: 30),
