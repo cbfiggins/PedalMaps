@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'map.dart';
 import 'stopwatch.dart';
 
 class distanceTraveled extends StatefulWidget{
@@ -103,8 +105,15 @@ class _distanceTraveled extends State<distanceTraveled> {
       backgroundColor: Colors.blueGrey,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              child: map(),
+              width: 350,
+              height: 400,
+              padding: new EdgeInsets.only(bottom: 25),
+            ),
+            
             Text(
               "$hoursStr:$minutesStr:$secondsStr",
               style: TextStyle(
