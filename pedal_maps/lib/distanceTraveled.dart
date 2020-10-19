@@ -33,27 +33,32 @@ class _distanceTraveled extends State<distanceTraveled> {
         desiredAccuracy: LocationAccuracy.high);
     _lastPosition = _currentPosition;
     _isTrackingDistance = true;
-    _totalDistance = 0;
+  }
+
+  void PauseDistanceTracking() async {
+    addDistance();
+    _isTrackingDistance = false;
   }
 
   void StopTrackingDistance() {
+    _totalDistance = 0;
     _isTrackingDistance = false;
   }
 
   void addDistance() async {
-    //while (_isTrackingDistance) {
-    if (int.parse(secondsStr) % 5 == 0) {
-      //update distance every 5 seconds
-      _currentPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      _totalDistance += Geolocator.distanceBetween(
-          _lastPosition.latitude,
-          _lastPosition.longitude,
-          _currentPosition.latitude,
-          _currentPosition.longitude);
-      _lastPosition = _currentPosition;
+    if (_isTrackingDistance) {
+      if (int.parse(secondsStr) % 5 == 0) {
+        //update distance every 5 seconds
+        _currentPosition = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+        _totalDistance += Geolocator.distanceBetween(
+            _lastPosition.latitude,
+            _lastPosition.longitude,
+            _currentPosition.latitude,
+            _currentPosition.longitude);
+        _lastPosition = _currentPosition;
+      }
     }
-    //}
   }
 
   void StopWatchStart() {
@@ -193,7 +198,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               ),
             ),
             Text(
-              "$_totalDistance" + "m",
+              (_totalDistance / 1609).toStringAsFixed(2) + "Mi",
               style: TextStyle(
                 fontSize: 60.0,
               ),
@@ -254,6 +259,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 ),
               ),
               onPressed: () {
+                PauseDistanceTracking();
                 StopWatchPause();
               },
             ),
