@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'map.dart';
 import 'stopwatch.dart';
 import 'forms.dart';
+import 'dart:async';
+import 'package:geolocator/geolocator.dart';
 
 class distanceTraveled extends StatefulWidget {
   _distanceTraveled createState() => _distanceTraveled();
@@ -11,6 +13,10 @@ class distanceTraveled extends StatefulWidget {
 class _distanceTraveled extends State<distanceTraveled> {
   final _formkey = GlobalKey<FormState>();
   TrailData _data = TrailData();
+
+  Position _currentPosition;
+  Position _lastPosition;
+  double _totalDistance = 0;
 
   var hoursStr = '00';
   var minutesStr = '00';
