@@ -16,7 +16,8 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   Position _currentPosition;
   Position _lastPosition;
-  double _totalDistance = 0;
+  var _totalDistance;
+  var _isTrackingDistance = false;
 
   var hoursStr = '00';
   var minutesStr = '00';
@@ -26,6 +27,34 @@ class _distanceTraveled extends State<distanceTraveled> {
   var pause_pressed = false;
 
   int prevTick = 0;
+
+  void StartTrackingDistance() async {
+    _currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    _lastPosition = _currentPosition;
+    _isTrackingDistance = true;
+    _totalDistance = 0;
+  }
+
+  void StopTrackingDistance() {
+    _isTrackingDistance = false;
+  }
+
+  void addDistance() async {
+    //while (_isTrackingDistance) {
+    if (int.parse(secondsStr) % 5 == 0) {
+      //update distance every 5 seconds
+      _currentPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      _totalDistance += Geolocator.distanceBetween(
+          _lastPosition.latitude,
+          _lastPosition.longitude,
+          _currentPosition.latitude,
+          _currentPosition.longitude);
+      _lastPosition = _currentPosition;
+    }
+    //}
+  }
 
   void StopWatchStart() {
     //function that affects stopwatch when start button pressed
@@ -139,6 +168,7 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   @override
   Widget build(BuildContext context) {
+    addDistance();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -179,6 +209,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
+                    StartTrackingDistance();
                     StopWatchStart();
                   },
                 ),
@@ -198,6 +229,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                   ),
                   onPressed: () {
                     StopWatchPause();
+                    StopTrackingDistance();
                     _endRide();
                   },
                 ),
