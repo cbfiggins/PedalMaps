@@ -16,7 +16,7 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   Position _currentPosition;
   Position _lastPosition;
-  var _totalDistance;
+  double _totalDistance = 0;
   var _isTrackingDistance = false;
 
   var hoursStr = '00';
@@ -188,6 +188,12 @@ class _distanceTraveled extends State<distanceTraveled> {
             ),
             Text(
               "$hoursStr:$minutesStr:$secondsStr",
+              style: TextStyle(
+                fontSize: 60.0,
+              ),
+            ),
+            Text(
+              "$_totalDistance" + "m",
               style: TextStyle(
                 fontSize: 60.0,
               ),
