@@ -193,7 +193,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               ),
             ),
             Text(
-              "$_totalDistance" + "m",
+              (_totalDistance / 1609).toStringAsFixed(2) + "Mi",
               style: TextStyle(
                 fontSize: 60.0,
               ),
