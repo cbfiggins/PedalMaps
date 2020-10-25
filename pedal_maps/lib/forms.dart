@@ -7,6 +7,7 @@ class TrailData{
   String hours = "";
   String minutes = "";
   String seconds = "";
+  bool pavement = false;
 }
 
 void setTime(TrailData data, String h, String m, String s){
@@ -28,17 +29,58 @@ Widget buildTrailName(TrailData data){
 }
 
 Widget buildDifficulty(TrailData data){
-  return TextFormField(
-    validator: (value) => value.isEmpty || int.parse(value) > 5 || int.parse(value) < 1 ? "You must enter a difficulty 1 - 5" : null,
-    onSaved: (String value) {
-      data.difficulty = int.parse(value);
+  return DropdownButtonFormField<int>(
+    onSaved: (val) {
+      data.difficulty = val;
     },
-    keyboardType: TextInputType.number,
-    inputFormatters: [
-      FilteringTextInputFormatter.digitsOnly
-    ],
+    validator: (val) => val == null ? 'You must select a difficulty' : null,
+    items: [
+      1, 2, 3, 4, 5
+    ].map<DropdownMenuItem<int>>(
+        (val){
+          return DropdownMenuItem(
+            child: Text(val.toString()),
+            value: val,
+          );
+        },
+
+    ).toList(),
+    onChanged: (val){
+      data.difficulty = val;
+    },
     decoration: InputDecoration(
-        hintText: "Difficulty"
+      labelText: "Difficulty",
+    ),
+  );
+}
+
+Widget buildPaved(TrailData data){
+  return DropdownButtonFormField<String>(
+    onSaved: (val) {
+      if(val == 'Is Paved')
+        data.pavement = true;
+      else
+        data.pavement = false;
+    },
+    validator: (val) => val == null ? 'You must select a Pavement option' : null,
+    items: [
+      "Is Paved", "Is Not Paved"
+    ].map<DropdownMenuItem<String>>(
+          (val){
+        return DropdownMenuItem(
+          child: Text(val),
+          value: val,
+        );
+      },
+    ).toList(),
+    onChanged: (val){
+      if(val == 'Is Paved')
+        data.pavement = true;
+      else
+        data.pavement = false;
+    },
+    decoration: InputDecoration(
+      labelText: "Pavement",
     ),
   );
 }
