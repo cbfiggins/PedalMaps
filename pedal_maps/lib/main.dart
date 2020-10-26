@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pedal_maps/nearbyTrails.dart';
 import 'distanceTraveled.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'map.dart';
 
 void main() {
@@ -8,6 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -78,7 +80,7 @@ class PageSelectButton extends StatelessWidget {
         child: RaisedButton(
           child: Text(buttonText, style: TextStyle(fontSize: 26)),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           color: Colors.red,
           textColor: Colors.white,
           disabledColor: Colors.grey,
