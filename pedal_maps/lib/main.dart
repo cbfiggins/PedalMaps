@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pedal_maps/nearbyTrails.dart';
 import 'distanceTraveled.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'map.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/distanceTraveled': (context) => distanceTraveled(),
+        '/nearbyTrails' : (context) => nearbyTrails(),
       },
       title: 'Pedal Maps',
       theme: ThemeData(
@@ -51,7 +53,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            //PageSelectButton(buttonText: "Trails", route: '/trailList'),
+            PageSelectButton(buttonText: "Nearby Trails", route: '/nearbyTrails'),
             SizedBox(
               height: 10,
             ),

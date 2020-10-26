@@ -136,16 +136,21 @@ class _distanceTraveled extends State<distanceTraveled> {
             title: Text('End Ride'),
             content: Form(
               key: _formkey,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('Are you sure you want to end the ride?'),
-                    buildTrailName(_data),
-                    buildDifficulty(_data),
-                  ],
+              child: Container(
+                height: 200,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Are you sure you want to end the ride?'),
+                      buildTrailName(_data),
+                      buildDifficulty(_data),
+                      buildPaved(_data),
+                    ],
+                  ),
                 ),
-              ),
+              )
+
             ),
             actions: <Widget>[
               FlatButton(
@@ -159,9 +164,13 @@ class _distanceTraveled extends State<distanceTraveled> {
                     if (_formkey.currentState.validate()) {
                       _formkey.currentState.save();
                       setTime(_data, hoursStr, minutesStr, secondsStr);
-                      //print('Trail Name: ${_data.trailName}');
-                      //print('Difficulty: ${_data.difficulty}');
-                      //print('Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                      print('Trail Name: ${_data.trailName}');
+                      print('Difficulty: ${_data.difficulty}');
+                      print('Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                      if(_data.pavement == true)
+                        print('Trail is paved');
+                      else
+                        print('Trail is not paved');
                       StopWatchReset();
                       Navigator.of(context).pop();
                     }
@@ -263,7 +272,6 @@ class _distanceTraveled extends State<distanceTraveled> {
                 StopWatchPause();
               },
             ),
-            SizedBox(height: 30.0)
           ], // ColumnChildren
         ),
       ),
