@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'distanceTraveled.dart';
-import 'map.dart';
 
 void main() {
   runApp(MyApp());
