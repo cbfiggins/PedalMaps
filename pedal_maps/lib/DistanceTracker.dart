@@ -13,7 +13,7 @@ class DistanceTracker {
   DistanceTracker() {
     _totalDistance = 0;
     _isTrackingDistance = false;
-    positions.clear();
+    positions = new List<Position>();
     timerInterval = Duration(seconds: 5);
     timer = Timer.periodic(timerInterval, AddDistance);
   }
@@ -31,6 +31,7 @@ class DistanceTracker {
 
   void StopTrackingDistance() {
     _totalDistance = 0;
+    positions.clear();
     _isTrackingDistance = false;
   }
 
