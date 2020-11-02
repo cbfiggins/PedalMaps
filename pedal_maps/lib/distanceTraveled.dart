@@ -4,7 +4,7 @@ import 'map.dart';
 import 'stopwatch.dart';
 import 'forms.dart';
 import 'dart:async';
-import 'package:geolocator/geolocator.dart';
+import 'DistanceTracker.dart';
 
 class distanceTraveled extends StatefulWidget {
   _distanceTraveled createState() => _distanceTraveled();
@@ -14,10 +14,7 @@ class _distanceTraveled extends State<distanceTraveled> {
   final _formkey = GlobalKey<FormState>();
   TrailData _data = TrailData();
 
-  Position _currentPosition;
-  Position _lastPosition;
-  double _totalDistance = 0;
-  var _isTrackingDistance = false;
+  DistanceTracker _tracker = DistanceTracker();
 
   var hoursStr = '00';
   var minutesStr = '00';
@@ -28,46 +25,14 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   int prevTick = 0;
 
-  void StartTrackingDistance() async {
-    _currentPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    _lastPosition = _currentPosition;
-    _isTrackingDistance = true;
-  }
-
-  void PauseTrackingDistance() async {
-    addDistance();
-    _isTrackingDistance = false;
-  }
-
-  void StopTrackingDistance() {
-    _totalDistance = 0;
-    _isTrackingDistance = false;
-  }
-
-  void addDistance() async {
-    if (_isTrackingDistance) {
-      if (int.parse(secondsStr) % 5 == 0) {
-        //update distance every 5 seconds
-        _currentPosition = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
-        _totalDistance += Geolocator.distanceBetween(
-            _lastPosition.latitude,
-            _lastPosition.longitude,
-            _currentPosition.latitude,
-            _currentPosition.longitude);
-        _lastPosition = _currentPosition;
-      }
-    }
-  }
-
   void StopWatchStart() {
     //function that affects stopwatch when start button pressed
     if (start_pressed == false) {
       timerStream = stopWatchStream();
       timerSubscription = timerStream.listen((int newTick) {
         setState(() {
-          hoursStr = ((newTick / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
+          hoursStr =
+              ((newTick / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
           minutesStr = ((newTick / 60) % 60).floor().toString().padLeft(2, '0');
           secondsStr = (newTick % 60).floor().toString().padLeft(2, '0');
           prevTick = newTick;
@@ -161,18 +126,19 @@ class _distanceTraveled extends State<distanceTraveled> {
                     if (_formkey.currentState.validate()) {
                       _formkey.currentState.save();
                       setTime(_data, hoursStr, minutesStr, secondsStr);
-                      setDistance(_data, _totalDistance / 1609);
+                      setDistance(_data, _tracker.PrintDistanceInMiles());
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
                       print(
                           'Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
-                      print("Trail length: ${_data.totalDistance.toStringAsFixed(2)} Mi");
+                      print(
+                          "Trail length: ${_data.totalDistance.toStringAsFixed(2)} Mi");
                       if (_data.pavement == true)
                         print('Trail is paved');
                       else
                         print('Trail is not paved');
                       StopWatchReset();
-                      StopTrackingDistance();
+                      _tracker.StopTrackingDistance();
                       Navigator.of(context).pop();
                     }
                   })
@@ -183,7 +149,6 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   @override
   Widget build(BuildContext context) {
-    addDistance();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -208,7 +173,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               ),
             ),
             Text(
-              (_totalDistance / 1609).toStringAsFixed(2) + "Mi",
+              _tracker.PrintDistanceInMiles().toStringAsFixed(2) + "  Mi",
               style: TextStyle(
                 fontSize: 60.0,
               ),
@@ -230,7 +195,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    StartTrackingDistance();
+                    _tracker.StartTrackingDistance();
                     StopWatchStart();
                   },
                 ),
@@ -250,7 +215,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                   ),
                   onPressed: () {
                     StopWatchPause();
-                    PauseTrackingDistance();
+                    _tracker.PauseTrackingDistance();
                     _endRide();
                   },
                 ),
@@ -269,7 +234,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 ),
               ),
               onPressed: () {
-                PauseTrackingDistance();
+                _tracker.PauseTrackingDistance();
                 StopWatchPause();
               },
             ),
