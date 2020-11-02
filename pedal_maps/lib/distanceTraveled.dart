@@ -67,8 +67,7 @@ class _distanceTraveled extends State<distanceTraveled> {
       timerStream = stopWatchStream();
       timerSubscription = timerStream.listen((int newTick) {
         setState(() {
-          hoursStr =
-              ((newTick / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
+          hoursStr = ((newTick / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
           minutesStr = ((newTick / 60) % 60).floor().toString().padLeft(2, '0');
           secondsStr = (newTick % 60).floor().toString().padLeft(2, '0');
           prevTick = newTick;
@@ -135,23 +134,21 @@ class _distanceTraveled extends State<distanceTraveled> {
           return AlertDialog(
             title: Text('End Ride'),
             content: Form(
-              key: _formkey,
-              child: Container(
-                height: 200,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Are you sure you want to end the ride?'),
-                      buildTrailName(_data),
-                      buildDifficulty(_data),
-                      buildPaved(_data),
-                    ],
+                key: _formkey,
+                child: Container(
+                  height: 200,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Are you sure you want to end the ride?'),
+                        buildTrailName(_data),
+                        buildDifficulty(_data),
+                        buildPaved(_data),
+                      ],
+                    ),
                   ),
-                ),
-              )
-
-            ),
+                )),
             actions: <Widget>[
               FlatButton(
                   child: Text('CONTINUE'),
@@ -166,8 +163,9 @@ class _distanceTraveled extends State<distanceTraveled> {
                       setTime(_data, hoursStr, minutesStr, secondsStr);
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
-                      print('Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
-                      if(_data.pavement == true)
+                      print(
+                          'Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                      if (_data.pavement == true)
                         print('Trail is paved');
                       else
                         print('Trail is not paved');
