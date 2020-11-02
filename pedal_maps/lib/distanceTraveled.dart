@@ -137,7 +137,6 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   @override
   Widget build(BuildContext context) {
-    _tracker.addDistance();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -162,7 +161,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               ),
             ),
             Text(
-              _tracker.PrintDistanceInMiles() + "Mi",
+              _tracker.PrintDistanceInMiles() + "  Mi",
               style: TextStyle(
                 fontSize: 60.0,
               ),
