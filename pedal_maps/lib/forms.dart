@@ -8,12 +8,17 @@ class TrailData{
   String minutes = "";
   String seconds = "";
   bool pavement = false;
+  double totalDistance = 0.0;
 }
 
 void setTime(TrailData data, String h, String m, String s){
   data.hours = h;
   data.minutes = m;
   data.seconds = s;
+}
+
+void setDistance(TrailData data, double distance){
+  data.totalDistance = distance;
 }
 
 Widget buildTrailName(TrailData data){
