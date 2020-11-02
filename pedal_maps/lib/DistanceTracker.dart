@@ -25,7 +25,7 @@ class DistanceTracker {
     _isTrackingDistance = true;
   }
 
-  void PauseDistanceTracking() async {
+  void PauseTrackingDistance() async {
     _isTrackingDistance = false;
   }
 
@@ -49,7 +49,7 @@ class DistanceTracker {
     }
   }
 
-  String PrintDistanceInMiles() {
-    return (_totalDistance / 1609).toStringAsFixed(2);
+  double PrintDistanceInMiles() {
+    return (_totalDistance / 1609);
   }
 }
