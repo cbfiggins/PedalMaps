@@ -35,7 +35,7 @@ class _distanceTraveled extends State<distanceTraveled> {
     _isTrackingDistance = true;
   }
 
-  void PauseDistanceTracking() async {
+  void PauseTrackingDistance() async {
     addDistance();
     _isTrackingDistance = false;
   }
@@ -161,15 +161,18 @@ class _distanceTraveled extends State<distanceTraveled> {
                     if (_formkey.currentState.validate()) {
                       _formkey.currentState.save();
                       setTime(_data, hoursStr, minutesStr, secondsStr);
+                      setDistance(_data, _totalDistance / 1609);
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
                       print(
                           'Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                      print("Trail length: ${_data.totalDistance.toStringAsFixed(2)} Mi");
                       if (_data.pavement == true)
                         print('Trail is paved');
                       else
                         print('Trail is not paved');
                       StopWatchReset();
+                      StopTrackingDistance();
                       Navigator.of(context).pop();
                     }
                   })
@@ -247,7 +250,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                   ),
                   onPressed: () {
                     StopWatchPause();
-                    StopTrackingDistance();
+                    PauseTrackingDistance();
                     _endRide();
                   },
                 ),
@@ -266,7 +269,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 ),
               ),
               onPressed: () {
-                PauseDistanceTracking();
+                PauseTrackingDistance();
                 StopWatchPause();
               },
             ),
