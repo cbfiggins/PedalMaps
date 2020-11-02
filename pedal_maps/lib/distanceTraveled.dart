@@ -99,18 +99,21 @@ class _distanceTraveled extends State<distanceTraveled> {
           return AlertDialog(
             title: Text('End Ride'),
             content: Form(
-              key: _formkey,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('Are you sure you want to end the ride?'),
-                    buildTrailName(_data),
-                    buildDifficulty(_data),
-                  ],
-                ),
-              ),
-            ),
+                key: _formkey,
+                child: Container(
+                  height: 200,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Are you sure you want to end the ride?'),
+                        buildTrailName(_data),
+                        buildDifficulty(_data),
+                        buildPaved(_data),
+                      ],
+                    ),
+                  ),
+                )),
             actions: <Widget>[
               FlatButton(
                   child: Text('CONTINUE'),
@@ -123,10 +126,19 @@ class _distanceTraveled extends State<distanceTraveled> {
                     if (_formkey.currentState.validate()) {
                       _formkey.currentState.save();
                       setTime(_data, hoursStr, minutesStr, secondsStr);
-                      //print('Trail Name: ${_data.trailName}');
-                      //print('Difficulty: ${_data.difficulty}');
-                      //print('Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                      setDistance(_data, _tracker.PrintDistanceInMiles());
+                      print('Trail Name: ${_data.trailName}');
+                      print('Difficulty: ${_data.difficulty}');
+                      print(
+                          'Time: ${_data.hours}:${_data.minutes}:${_data.seconds}');
+                      print(
+                          "Trail length: ${_data.totalDistance.toStringAsFixed(2)} Mi");
+                      if (_data.pavement == true)
+                        print('Trail is paved');
+                      else
+                        print('Trail is not paved');
                       StopWatchReset();
+                      _tracker.StopTrackingDistance();
                       Navigator.of(context).pop();
                     }
                   })
@@ -161,7 +173,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               ),
             ),
             Text(
-              _tracker.PrintDistanceInMiles() + "  Mi",
+              _tracker.PrintDistanceInMiles().toStringAsFixed(2) + "  Mi",
               style: TextStyle(
                 fontSize: 60.0,
               ),
@@ -203,7 +215,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                   ),
                   onPressed: () {
                     StopWatchPause();
-                    _tracker.StopTrackingDistance();
+                    _tracker.PauseTrackingDistance();
                     _endRide();
                   },
                 ),
@@ -222,11 +234,10 @@ class _distanceTraveled extends State<distanceTraveled> {
                 ),
               ),
               onPressed: () {
-                _tracker.PauseDistanceTracking();
+                _tracker.PauseTrackingDistance();
                 StopWatchPause();
               },
             ),
-            SizedBox(height: 30.0)
           ], // ColumnChildren
         ),
       ),

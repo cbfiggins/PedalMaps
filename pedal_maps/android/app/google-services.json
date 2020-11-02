@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "969879735664",
+    "firebase_url": "https://pedalmaps.firebaseio.com",
+    "project_id": "pedalmaps",
+    "storage_bucket": "pedalmaps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969879735664:android:b8154f20b3f0d3308193b5",
+        "android_client_info": {
+          "package_name": "com.pedal_maps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969879735664-no6bgrtooissvuk06q968cpbfsbd79mn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBqsvZZl8gu7ag6TpL_PGlNsypCkscfRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969879735664-no6bgrtooissvuk06q968cpbfsbd79mn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
