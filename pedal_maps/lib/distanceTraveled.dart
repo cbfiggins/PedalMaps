@@ -25,6 +25,7 @@ class _distanceTraveled extends State<distanceTraveled> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference database =
       FirebaseFirestore.instance.collection('trails');
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   void start() {
     timerInterval = Duration(seconds: 1);
@@ -72,6 +73,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                       setTime(_data, _stopwatch.GetHours(),
                           _stopwatch.GetMinutes(), _stopwatch.GetSeconds());
                       setDistance(_data, _tracker.PrintDistanceInMiles());
+                      setUser(_data, auth);
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
                       print(
