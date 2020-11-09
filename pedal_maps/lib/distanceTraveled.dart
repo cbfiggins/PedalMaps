@@ -15,81 +15,20 @@ class _distanceTraveled extends State<distanceTraveled> {
   TrailData _data = TrailData();
 
   DistanceTracker _tracker = DistanceTracker();
+  Stopwatch _stopwatch = Stopwatch();
 
-  var hoursStr = '00';
-  var minutesStr = '00';
-  var secondsStr = '00';
-  var timerStream, timerSubscription;
-  var start_pressed = false;
-  var pause_pressed = false;
+  Duration timerInterval;
+  Timer _timer;
+  bool started = false;
 
-  int prevTick = 0;
+  void start() {
+    timerInterval = Duration(seconds: 1);
+    _timer = Timer.periodic(timerInterval, update);
+  }
 
-  void StopWatchStart() {
-    //function that affects stopwatch when start button pressed
-    if (start_pressed == false) {
-      timerStream = stopWatchStream();
-      timerSubscription = timerStream.listen((int newTick) {
-        setState(() {
-          hoursStr =
-              ((newTick / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
-          minutesStr = ((newTick / 60) % 60).floor().toString().padLeft(2, '0');
-          secondsStr = (newTick % 60).floor().toString().padLeft(2, '0');
-          prevTick = newTick;
-        });
-      });
-      start_pressed = true;
-    }
-    if (start_pressed == true && pause_pressed == true) {
-      timerStream = stopWatchStream();
-      timerSubscription = timerStream.listen((int newTick) {
-        setState(() {
-          hoursStr = (((prevTick + 1) / (60 * 60)) % 60)
-              .floor()
-              .toString()
-              .padLeft(2, '0');
-          minutesStr =
-              (((prevTick + 1) / 60) % 60).floor().toString().padLeft(2, '0');
-          secondsStr = ((prevTick + 1) % 60).floor().toString().padLeft(2, '0');
-          prevTick = prevTick + 1;
-        });
-      });
-      pause_pressed = false;
-    }
-  } //end StopWatchStart
-
-  void StopWatchReset() {
-    // function that affects stopwatch when reset button is pressed
-    if (timerStream != null) {
-      timerSubscription.cancel();
-      timerStream = null;
-      setState(() {
-        hoursStr = '00';
-        minutesStr = '00';
-        secondsStr = '00';
-        prevTick = 0;
-      });
-      start_pressed = false;
-      pause_pressed = false;
-    } else {
-      setState(() {
-        hoursStr = '00';
-        minutesStr = '00';
-        secondsStr = '00';
-        prevTick = 0;
-      });
-    }
-  } // end StopWatchReset
-
-  void StopWatchPause() {
-    // function that affects stopwatch when pause button is pressed
-    if (start_pressed == true) {
-      //timerStream.stop();
-      timerSubscription.cancel();
-      timerStream = null;
-      pause_pressed = true;
-    }
-  } // end StopWatchPause
+  void update(_) {
+    setState(() {});
+  }
 
   Future<void> _endRide() async {
     return showDialog<void>(
@@ -125,7 +64,8 @@ class _distanceTraveled extends State<distanceTraveled> {
                   onPressed: () {
                     if (_formkey.currentState.validate()) {
                       _formkey.currentState.save();
-                      setTime(_data, hoursStr, minutesStr, secondsStr);
+                      setTime(_data, _stopwatch.GetHours(),
+                          _stopwatch.GetMinutes(), _stopwatch.GetSeconds());
                       setDistance(_data, _tracker.PrintDistanceInMiles());
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
@@ -137,7 +77,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                         print('Trail is paved');
                       else
                         print('Trail is not paved');
-                      StopWatchReset();
+                      _stopwatch.ResetStopwatch();
                       _tracker.StopTrackingDistance();
                       Navigator.of(context).pop();
                     }
@@ -149,6 +89,10 @@ class _distanceTraveled extends State<distanceTraveled> {
 
   @override
   Widget build(BuildContext context) {
+    if (!started) {
+      start();
+      started = true;
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -167,7 +111,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               padding: new EdgeInsets.only(bottom: 25),
             ),
             Text(
-              "$hoursStr:$minutesStr:$secondsStr",
+              _stopwatch.GetTime(),
               style: TextStyle(
                 fontSize: 60.0,
               ),
@@ -196,7 +140,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                   ),
                   onPressed: () {
                     _tracker.StartTrackingDistance();
-                    StopWatchStart();
+                    _stopwatch.StartStopwatch();
                   },
                 ),
                 SizedBox(width: 30.0),
@@ -214,7 +158,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    StopWatchPause();
+                    _stopwatch.PauseStopwatch();
                     _tracker.PauseTrackingDistance();
                     _endRide();
                   },
@@ -235,7 +179,7 @@ class _distanceTraveled extends State<distanceTraveled> {
               ),
               onPressed: () {
                 _tracker.PauseTrackingDistance();
-                StopWatchPause();
+                _stopwatch.PauseStopwatch();
               },
             ),
           ], // ColumnChildren

@@ -1,44 +1,72 @@
 import 'dart:async';
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 
 //adopted from https://medium.com/analytics-vidhya/build-a-simple-stopwatch-in-flutter-a1f21cfcd7a8
 
-Stream<int> stopWatchStream() {
+class Stopwatch {
+  Timer _timer;
+  Duration timerInterval;
+  int counter;
+  bool startpressed;
+  bool pausepressed;
 
-  StreamController<int> streamController;
-  Timer timer;
-  Duration timerInterval = Duration(seconds: 1);
-  int counter = 0;
-
-  //check timer is running, if so stop process, reset timer and counter
-
-  void stopTimer() {
-    if (timer != null) {
-      timer.cancel();
-      timer = null;
-      counter = 0;
-      streamController.close();
-    }
+  Stopwatch() {
+    startpressed = false;
+    pausepressed = false;
+    counter = 0;
+    timerInterval = Duration(seconds: 1);
+    _timer = Timer.periodic(timerInterval, AddSecond);
   }
 
-  void tick(_) {
-    counter++;
-    streamController.add(counter);
+  void AddSecond(_) {
+    if (startpressed && !pausepressed) {
+      counter++;
+    }
   }
 
   //while active calls tick function every second
   //Duration timerInterval = Duration(seconds: 1)
-  void startTimer() {
-    if(timer == null)
-      timer = Timer.periodic(timerInterval, tick);
+  void StartStopwatch() {
+    //log("Started Stopwatch");
+    startpressed = true;
+    pausepressed = false;
   }
 
-  //functions to be called when events occur
-  streamController = StreamController<int>(
-    onListen: startTimer,
-    onCancel: stopTimer,
-    onResume: startTimer,
-    onPause: stopTimer,
-  );
+  void PauseStopwatch() {
+    pausepressed = true;
+  }
 
-  return streamController.stream;
+  void ResetStopwatch() {
+    startpressed = false;
+    pausepressed = false;
+    counter = 0;
+  }
+
+  void StopStopwatch() {
+    startpressed = false;
+    pausepressed = false;
+    counter = 0;
+  }
+
+  String GetTime() {
+    var hoursStr =
+        ((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
+    var minutesStr = ((counter / 60) % 60).floor().toString().padLeft(2, '0');
+    var secondsStr = (counter % 60).floor().toString().padLeft(2, '0');
+    return (hoursStr + ":" + minutesStr + ":" + secondsStr);
+  }
+
+  String GetHours() {
+    return (((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0'));
+  }
+
+  String GetMinutes() {
+    return (((counter / 60) % 60).floor().toString().padLeft(2, '0'));
+  }
+
+  String GetSeconds() {
+    return ((counter % 60).floor().toString().padLeft(2, '0'));
+  }
 }
