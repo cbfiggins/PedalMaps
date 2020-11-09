@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TrailData{
+  String user = "";
   String trailName = "";
   int difficulty = 0;
   String hours = "";
@@ -22,9 +24,17 @@ void setDistance(TrailData data, double distance){
   data.totalDistance = distance;
 }
 
+void setUser(TrailData data, FirebaseAuth auth){
+  final User user = auth.currentUser;
+  final String uid = user.uid;
+  data.user = uid;
+
+}
+
 void addTrail(TrailData data, CollectionReference trails) {
   trails
   .add({
+    'user': data.user,
     'trailName': data.trailName,
     'difficulty': data.difficulty,
     'hours': data.hours,
