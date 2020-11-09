@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,6 +20,22 @@ void setTime(TrailData data, String h, String m, String s){
 
 void setDistance(TrailData data, double distance){
   data.totalDistance = distance;
+}
+
+void addTrail(TrailData data, CollectionReference trails) {
+  trails
+  .add({
+    'trailName': data.trailName,
+    'difficulty': data.difficulty,
+    'hours': data.hours,
+    'minutes': data.minutes,
+    'seconds': data.seconds,
+    'pavement': data.pavement,
+    'totalDistance': data.totalDistance
+  })
+      .then((value) => print("Trail Added"))
+      .catchError((error) => print("Failed to add trail: $error"));
+
 }
 
 Widget buildTrailName(TrailData data){
@@ -89,3 +106,4 @@ Widget buildPaved(TrailData data){
     ),
   );
 }
+

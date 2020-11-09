@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'map.dart';
 import 'stopwatch.dart';
@@ -19,6 +22,9 @@ class _distanceTraveled extends State<distanceTraveled> {
   Duration timerInterval;
   Timer _timer;
   bool started = false;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference database =
+      FirebaseFirestore.instance.collection('trails');
 
   void start() {
     timerInterval = Duration(seconds: 1);
@@ -77,6 +83,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                       else
                         print('Trail is not paved');
                       _stopwatch.ResetStopwatch();
+                      addTrail(_data, database);
                       _tracker.StopTrackingDistance();
                       Navigator.of(context).pop();
                     }
