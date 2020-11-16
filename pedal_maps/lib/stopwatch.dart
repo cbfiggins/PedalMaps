@@ -41,12 +41,6 @@ class Stopwatch {
     counter = 0;
   }
 
-  void StopStopwatch() {
-    startpressed = false;
-    pausepressed = false;
-    counter = 0;
-  }
-
   String GetTime() {
     var hoursStr =
         ((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
