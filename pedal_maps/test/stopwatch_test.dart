@@ -36,6 +36,36 @@ void main(){
 
   });
 
+  test("Get seconds single digit", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 9; i++){
+      stop.AddSecond(0);
+    }
+    String sec = stop.GetSeconds();
+    expect(sec, equals("09"));
+  });
+
+  test("Get seconds double digit", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 35; i++){
+      stop.AddSecond(0);
+    }
+    String sec = stop.GetSeconds();
+    expect(sec, equals("35"));
+  });
+
+  test("Get time", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 10; i++){
+      stop.AddSecond(0);
+    }
+    String time = stop.GetTime();
+    expect(time, equals("00:00:10"));
+  });
+
 
 
 
