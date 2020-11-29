@@ -56,6 +56,48 @@ void main(){
     expect(sec, equals("35"));
   });
 
+  test("Get minutes single digit", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 61; i++){
+      stop.AddSecond(0);
+    }
+    String sec = stop.GetMinutes();
+    expect(sec, equals("01"));
+  });
+
+  test("Get minutes double digit", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 601; i++){
+      stop.AddSecond(0);
+    }
+    String sec = stop.GetMinutes();
+    expect(sec, equals("10"));
+  });
+
+  test("Get hours single digit", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 3601; i++){
+      stop.AddSecond(0);
+    }
+    String sec = stop.GetHours();
+    expect(sec, equals("01"));
+  });
+
+  test("Get hours double digit", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 36001; i++){
+      stop.AddSecond(0);
+    }
+    String sec = stop.GetHours();
+    expect(sec, equals("10"));
+  });
+
+
+
   test("Get time", (){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
@@ -66,6 +108,15 @@ void main(){
     expect(time, equals("00:00:10"));
   });
 
+  test("Get time all", (){
+    Stopwatch stop = Stopwatch();
+    stop.startpressed = true;
+    for(int i = 0; i < 3725; i++){
+      stop.AddSecond(0);
+    }
+    String time = stop.GetTime();
+    expect(time, equals("01:02:05"));
+  });
 
 
 
