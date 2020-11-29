@@ -1,23 +1,72 @@
 import 'package:flutter/material.dart';
-import 'map.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'TrailPage.dart';
 
-class nearbyTrails extends StatefulWidget {
-  _nearbyTrails createState() => _nearbyTrails();
-}
-
-class _nearbyTrails extends State<nearbyTrails> {
-
+class NearbyTrails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        title: Text("Nearby Trails"),
         backgroundColor: Colors.red,
+        title: Text("Trails"),
       ),
-      body: Center(
-        child: map(),
+      body: ListPage(),
+    );
+  }
+}
+
+class ListPage extends StatefulWidget {
+  @override
+  _ListPageState createState() => _ListPageState();
+}
+
+class _ListPageState extends State<ListPage> {
+
+  Future getTrails() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    QuerySnapshot q = await firestore.collection("trails").get();
+    return q.docs;
+  }
+  
+  navigateToDetail(DocumentSnapshot trail){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => TrailPage(trail: trail,),),);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FutureBuilder(
+        future: getTrails(),
+        builder: (_, snapshot) {
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text("Loading"),
+            );
+          }
+
+          else {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemExtent: 100,
+              itemBuilder: (_, index) {
+                return ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                  title: Text(snapshot.data[index].get('trailName'),
+                  style: TextStyle(fontSize: 25.0),),
+                  subtitle: Text("difficulty: ${snapshot.data[index].get('difficulty')}",
+                  style: TextStyle(fontSize: 15.0),),
+                  onTap: () => navigateToDetail(snapshot.data[index]),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }
 }
+

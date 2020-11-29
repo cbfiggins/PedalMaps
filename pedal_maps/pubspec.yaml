@@ -21,13 +21,13 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  geolocator: ^6.0.0
+  geolocator: ^6.1.6
   flutter:
     sdk: flutter
-  google_maps_flutter: ^0.5.27+3
-  location: ^3.0.0
-  cloud_firestore: ^0.14.0+2
-  firebase_auth: ^0.18.0+1
+  google_maps_flutter: ^1.0.6
+  location: ^3.0.2
+  cloud_firestore: ^0.14.3
+  firebase_auth: ^0.18.3
   provider: ^4.3.2+2
 #
 #  cloud_firestore:

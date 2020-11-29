@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) => home(),
         '/distanceTraveled': (context) => distanceTraveled(),
-        '/nearbyTrails': (context) => nearbyTrails(),
+        '/nearbyTrails': (context) => NearbyTrails(),
         '/loginScreen': (context) => LogInScreen(),
       },
       title: 'Pedal Maps',
