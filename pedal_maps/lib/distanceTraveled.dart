@@ -2,11 +2,15 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'map.dart';
+//import 'map.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'stopwatch.dart';
 import 'forms.dart';
 import 'dart:async';
 import 'DistanceTracker.dart';
+import 'package:flutter/services.dart';
+import 'dart:typed_data';
+import 'package:geolocator/geolocator.dart';
 
 class distanceTraveled extends StatefulWidget {
   _distanceTraveled createState() => _distanceTraveled();
@@ -26,14 +30,47 @@ class _distanceTraveled extends State<distanceTraveled> {
   CollectionReference database =
       FirebaseFirestore.instance.collection('trails');
   final FirebaseAuth auth = FirebaseAuth.instance;
+  Marker marker;
+  Uint8List imagePing;
+  GoogleMapController mapController;
 
-  void start() {
+  //works as constructor for class
+  void start() async {
     timerInterval = Duration(seconds: 1);
     _timer = Timer.periodic(timerInterval, update);
+    imagePing = await getMarkerImage();
   }
 
   void update(_) {
     setState(() {});
+  }
+
+  //get markerIcon.png from assets folder, convert it to Uint8 list return it
+  Future<Uint8List> getMarkerImage() async {
+    ByteData image =
+        await DefaultAssetBundle.of(context).load("assets/markerIcon.png");
+    return image.buffer.asUint8List();
+  }
+
+  void updateMarkerLocation() {
+    Position pos = _tracker.GetCurrentLocation();
+    if (pos != null) {
+      LatLng curLatLng = LatLng(pos.latitude, pos.longitude);
+      marker = Marker(
+        markerId: MarkerId("root"),
+        position: curLatLng,
+        draggable: false,
+        anchor: Offset(0.5, 0.5),
+        icon: BitmapDescriptor.fromBytes(imagePing),
+      );
+      if (mapController != null) {
+        mapController.animateCamera(CameraUpdate.newCameraPosition(
+            new CameraPosition(
+                bearing: 192.8,
+                target: LatLng(pos.latitude, pos.longitude),
+                zoom: 18.00)));
+      }
+    }
   }
 
   Future<void> _endRide() async {
@@ -101,6 +138,7 @@ class _distanceTraveled extends State<distanceTraveled> {
       start();
       started = true;
     }
+    updateMarkerLocation();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -113,7 +151,15 @@ class _distanceTraveled extends State<distanceTraveled> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: map(),
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(39.7285, -121.837479), zoom: 16.00),
+                markers: Set.of((marker != null) ? [marker] : []),
+                polylines: _tracker.GetPolylines(),
+                onMapCreated: (GoogleMapController controller) {
+                  mapController = controller;
+                },
+              ),
               width: 350,
               height: 400,
               padding: new EdgeInsets.only(bottom: 25),
