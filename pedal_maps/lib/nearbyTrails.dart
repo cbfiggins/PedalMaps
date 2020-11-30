@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'TrailPage.dart';
 
 class NearbyTrails extends StatelessWidget {
@@ -43,7 +44,10 @@ class _ListPageState extends State<ListPage> {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: Text("Loading"),
+              child: SpinKitWave(
+                color: Colors.white,
+                size: 50.0,
+              ),
             );
           }
 
