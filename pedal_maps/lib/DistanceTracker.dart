@@ -22,7 +22,7 @@ class DistanceTracker {
     _totalDistance = 0;
     _isTrackingDistance = false;
     positions = new List<LatLng>();
-    timerInterval = Duration(seconds: 5);
+    timerInterval = Duration(seconds: 2);
     _timer = Timer.periodic(timerInterval, AddDistance);
 
     getPermission();
