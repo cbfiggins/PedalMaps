@@ -11,6 +11,7 @@ import 'DistanceTracker.dart';
 import 'package:flutter/services.dart';
 import 'dart:typed_data';
 import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 class distanceTraveled extends StatefulWidget {
   _distanceTraveled createState() => _distanceTraveled();
@@ -33,6 +34,9 @@ class _distanceTraveled extends State<distanceTraveled> {
   Marker marker;
   Uint8List imagePing;
   GoogleMapController mapController;
+
+  StreamSubscription locationStream;
+  Location currentLocation = Location();
 
   //works as constructor for class
   void start() async {
@@ -63,13 +67,18 @@ class _distanceTraveled extends State<distanceTraveled> {
         anchor: Offset(0.5, 0.5),
         icon: BitmapDescriptor.fromBytes(imagePing),
       );
-      if (mapController != null) {
-        mapController.animateCamera(CameraUpdate.newCameraPosition(
-            new CameraPosition(
-                bearing: 192.8,
-                target: LatLng(pos.latitude, pos.longitude),
-                zoom: 18.00)));
-      }
+
+      if (locationStream != null) locationStream.cancel();
+
+      locationStream = currentLocation.onLocationChanged.listen((newLocalData) {
+        if (mapController != null) {
+          mapController.animateCamera(CameraUpdate.newCameraPosition(
+              new CameraPosition(
+                  bearing: 192.8,
+                  target: LatLng(newLocalData.latitude, newLocalData.longitude),
+                  zoom: 18.00)));
+        }
+      });
     }
   }
 
