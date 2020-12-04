@@ -120,6 +120,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                           _stopwatch.GetMinutes(), _stopwatch.GetSeconds());
                       setDistance(_data, _tracker.PrintDistanceInMiles());
                       setUser(_data, auth);
+                      setEnd(_data, _tracker.GetCurrentLocation());
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
                       print(
@@ -203,6 +204,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                   ),
                   onPressed: () {
                     _tracker.StartTrackingDistance();
+                    setStart(_data, _tracker.GetCurrentLocation());
                     _stopwatch.StartStopwatch();
                   },
                 ),
