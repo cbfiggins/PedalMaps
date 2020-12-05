@@ -17,6 +17,7 @@ class TrailData{
   double totalDistance = 0.0;
   GeoPoint start;
   GeoPoint end;
+  List<GeoPoint> positions = List<GeoPoint>();
 }
 
 void setTime(TrailData data, String h, String m, String s){
@@ -48,6 +49,13 @@ void setEnd(TrailData data, Position pos){
   }
 }
 
+void setPositions(TrailData data, List<LatLng> pos){
+
+  for(int i = 0; i < pos.length; i++){
+    data.positions.add(GeoPoint(pos[i].latitude, pos[i].longitude));
+  }
+}
+
 void addTrail(TrailData data, CollectionReference trails) {
   trails
   .add({
@@ -60,7 +68,8 @@ void addTrail(TrailData data, CollectionReference trails) {
     'pavement': data.pavement,
     'totalDistance': data.totalDistance,
     'start': data.start,
-    "end": data.end
+    "end": data.end,
+    "positions": data.positions
   })
       .then((value) => print("Trail Added"))
       .catchError((error) => print("Failed to add trail: $error"));

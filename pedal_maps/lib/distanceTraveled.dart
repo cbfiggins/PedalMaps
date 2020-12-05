@@ -121,6 +121,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                       setDistance(_data, _tracker.PrintDistanceInMiles());
                       setUser(_data, auth);
                       setEnd(_data, _tracker.GetCurrentLocation());
+                      setPositions(_data, _tracker.GetPositions());
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
                       print(
