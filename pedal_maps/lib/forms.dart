@@ -1,7 +1,10 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TrailData{
   String user = "";
@@ -12,6 +15,9 @@ class TrailData{
   String seconds = "";
   bool pavement = false;
   double totalDistance = 0.0;
+  GeoPoint start;
+  GeoPoint end;
+  List<GeoPoint> positions = List<GeoPoint>();
 }
 
 void setTime(TrailData data, String h, String m, String s){
@@ -31,6 +37,25 @@ void setUser(TrailData data, FirebaseAuth auth){
 
 }
 
+void setStart(TrailData data, Position pos){
+  if(data.start == null){
+    data.start = GeoPoint(pos.latitude, pos.longitude);
+  }
+}
+
+void setEnd(TrailData data, Position pos){
+  if(data.end == null){
+    data.end = GeoPoint(pos.latitude, pos.longitude);
+  }
+}
+
+void setPositions(TrailData data, List<LatLng> pos){
+
+  for(int i = 0; i < pos.length; i++){
+    data.positions.add(GeoPoint(pos[i].latitude, pos[i].longitude));
+  }
+}
+
 void addTrail(TrailData data, CollectionReference trails) {
   trails
   .add({
@@ -41,7 +66,10 @@ void addTrail(TrailData data, CollectionReference trails) {
     'minutes': data.minutes,
     'seconds': data.seconds,
     'pavement': data.pavement,
-    'totalDistance': data.totalDistance
+    'totalDistance': data.totalDistance,
+    'start': data.start,
+    "end": data.end,
+    "positions": data.positions
   })
       .then((value) => print("Trail Added"))
       .catchError((error) => print("Failed to add trail: $error"));

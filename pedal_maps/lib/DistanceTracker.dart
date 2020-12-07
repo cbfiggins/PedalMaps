@@ -99,4 +99,10 @@ class DistanceTracker {
   double PrintDistanceInMiles() {
     return (_totalDistance / 1609);
   }
+
+  List<LatLng> GetPositions() {
+    return positions;
+  }
+
 }
+
