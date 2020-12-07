@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        'home': (context) => home(),
-        '/distanceTraveled': (context) => distanceTraveled(),
+        'home': (context) => Home(),
+        '/distanceTraveled': (context) => DistanceTraveled(),
         '/nearbyTrails': (context) => NearbyTrails(),
         '/loginScreen': (context) => LogInScreen(),
       },

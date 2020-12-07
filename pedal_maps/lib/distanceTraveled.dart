@@ -13,11 +13,11 @@ import 'dart:typed_data';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
-class distanceTraveled extends StatefulWidget {
-  _distanceTraveled createState() => _distanceTraveled();
+class DistanceTraveled extends StatefulWidget {
+  _DistanceTraveled createState() => _DistanceTraveled();
 }
 
-class _distanceTraveled extends State<distanceTraveled> {
+class _DistanceTraveled extends State<DistanceTraveled> {
   final _formkey = GlobalKey<FormState>();
   TrailData _data = TrailData();
 
@@ -57,7 +57,7 @@ class _distanceTraveled extends State<distanceTraveled> {
   }
 
   void updateMarkerLocation() {
-    Position pos = _tracker.GetCurrentLocation();
+    Position pos = _tracker.getCurrentLocation();
     if (pos != null) {
       LatLng curLatLng = LatLng(pos.latitude, pos.longitude);
       marker = Marker(
@@ -116,12 +116,12 @@ class _distanceTraveled extends State<distanceTraveled> {
                   onPressed: () {
                     if (_formkey.currentState.validate()) {
                       _formkey.currentState.save();
-                      setTime(_data, _stopwatch.GetHours(),
-                          _stopwatch.GetMinutes(), _stopwatch.GetSeconds());
-                      setDistance(_data, _tracker.PrintDistanceInMiles());
+                      setTime(_data, _stopwatch.getHours(),
+                          _stopwatch.getMinutes(), _stopwatch.getSeconds());
+                      setDistance(_data, _tracker.printDistanceInMiles());
                       setUser(_data, auth);
-                      setEnd(_data, _tracker.GetCurrentLocation());
-                      setPositions(_data, _tracker.GetPositions());
+                      setEnd(_data, _tracker.getCurrentLocation());
+                      setPositions(_data, _tracker.getPositions());
                       print('Trail Name: ${_data.trailName}');
                       print('Difficulty: ${_data.difficulty}');
                       print(
@@ -132,9 +132,9 @@ class _distanceTraveled extends State<distanceTraveled> {
                         print('Trail is paved');
                       else
                         print('Trail is not paved');
-                      _stopwatch.ResetStopwatch();
+                      _stopwatch.resetStopwatch();
                       addTrail(_data, database);
-                      _tracker.StopTrackingDistance();
+                      _tracker.stopTrackingDistance();
                       Navigator.of(context).pop();
                     }
                   })
@@ -166,7 +166,7 @@ class _distanceTraveled extends State<distanceTraveled> {
                 initialCameraPosition: CameraPosition(
                     target: LatLng(39.7285, -121.837479), zoom: 16.00),
                 markers: Set.of((marker != null) ? [marker] : []),
-                polylines: _tracker.GetPolylines(),
+                polylines: _tracker.getPolylines(),
                 onMapCreated: (GoogleMapController controller) {
                   mapController = controller;
                 },
@@ -176,13 +176,13 @@ class _distanceTraveled extends State<distanceTraveled> {
               padding: new EdgeInsets.only(bottom: 25),
             ),
             Text(
-              _stopwatch.GetTime(),
+              _stopwatch.getTime(),
               style: TextStyle(
                 fontSize: 60.0,
               ),
             ),
             Text(
-              _tracker.PrintDistanceInMiles().toStringAsFixed(2) + "  Mi",
+              _tracker.printDistanceInMiles().toStringAsFixed(2) + "  Mi",
               style: TextStyle(
                 fontSize: 60.0,
               ),
@@ -204,9 +204,9 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    _tracker.StartTrackingDistance();
-                    setStart(_data, _tracker.GetCurrentLocation());
-                    _stopwatch.StartStopwatch();
+                    _tracker.startTrackingDistance();
+                    setStart(_data, _tracker.getCurrentLocation());
+                    _stopwatch.startStopwatch();
                   },
                 ),
                 SizedBox(width: 30.0),
@@ -224,8 +224,8 @@ class _distanceTraveled extends State<distanceTraveled> {
                     ),
                   ),
                   onPressed: () {
-                    _stopwatch.PauseStopwatch();
-                    _tracker.PauseTrackingDistance();
+                    _stopwatch.pauseStopwatch();
+                    _tracker.pauseTrackingDistance();
                     _endRide();
                   },
                 ),
@@ -244,8 +244,8 @@ class _distanceTraveled extends State<distanceTraveled> {
                 ),
               ),
               onPressed: () {
-                _tracker.PauseTrackingDistance();
-                _stopwatch.PauseStopwatch();
+                _tracker.pauseTrackingDistance();
+                _stopwatch.pauseStopwatch();
               },
             ),
           ], // ColumnChildren

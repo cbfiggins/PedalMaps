@@ -91,7 +91,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute<Null>(
                               builder: (BuildContext context) {
-                                return new home();
+                                return new Home();
                               },
                             ),
                           );
@@ -119,7 +119,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         if (newUser != null) {
                           Navigator.of(context).push(MaterialPageRoute<Null>(
                               builder: (BuildContext context) {
-                            return new home();
+                            return new Home();
                           }));
                         }
                       } catch (e) {

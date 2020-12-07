@@ -6,22 +6,22 @@ void main(){
 
   test("Stopwatch started", (){
     Stopwatch stop = Stopwatch();
-    stop.StartStopwatch();
+    stop.startStopwatch();
     var result = stop.startpressed == true;
     expect(result, true);
   });
 
   test("Stopwatch paused", (){
     Stopwatch stop = Stopwatch();
-    stop.PauseStopwatch();
+    stop.pauseStopwatch();
     var result = stop.pausepressed == true;
   expect(result, true);
   });
 
   test("Stopwatch reset", (){
     Stopwatch stop = Stopwatch();
-    stop.StartStopwatch();
-    stop.ResetStopwatch();
+    stop.startStopwatch();
+    stop.resetStopwatch();
     var result = (stop.counter == 0 && stop.pausepressed == false && stop.startpressed == false);
     expect(result, true);
   });
@@ -30,7 +30,7 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 10; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
     expect(stop.counter, equals(10));
 
@@ -40,9 +40,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 9; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String sec = stop.GetSeconds();
+    String sec = stop.getSeconds();
     expect(sec, equals("09"));
   });
 
@@ -50,9 +50,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 35; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String sec = stop.GetSeconds();
+    String sec = stop.getSeconds();
     expect(sec, equals("35"));
   });
 
@@ -60,9 +60,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 61; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String sec = stop.GetMinutes();
+    String sec = stop.getMinutes();
     expect(sec, equals("01"));
   });
 
@@ -70,9 +70,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 601; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String sec = stop.GetMinutes();
+    String sec = stop.getMinutes();
     expect(sec, equals("10"));
   });
 
@@ -80,9 +80,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 3601; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String sec = stop.GetHours();
+    String sec = stop.getHours();
     expect(sec, equals("01"));
   });
 
@@ -90,9 +90,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 36001; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String sec = stop.GetHours();
+    String sec = stop.getHours();
     expect(sec, equals("10"));
   });
 
@@ -102,9 +102,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 10; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String time = stop.GetTime();
+    String time = stop.getTime();
     expect(time, equals("00:00:10"));
   });
 
@@ -112,9 +112,9 @@ void main(){
     Stopwatch stop = Stopwatch();
     stop.startpressed = true;
     for(int i = 0; i < 3725; i++){
-      stop.AddSecond(0);
+      stop.addSecond(0);
     }
-    String time = stop.GetTime();
+    String time = stop.getTime();
     expect(time, equals("01:02:05"));
   });
 

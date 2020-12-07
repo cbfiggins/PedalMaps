@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-class map extends StatefulWidget {
+class Map extends StatefulWidget {
   @override
-  _map createState() => _map();
+  _Map createState() => _Map();
 }
 
-class _map extends State<map> {
+class _Map extends State<Map> {
 
   //global variables
   StreamSubscription locationStream;
