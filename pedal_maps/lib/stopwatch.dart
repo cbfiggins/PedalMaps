@@ -14,10 +14,10 @@ class Stopwatch {
     pausepressed = false;
     counter = 0;
     timerInterval = Duration(seconds: 1);
-    _timer = Timer.periodic(timerInterval, AddSecond);
+    _timer = Timer.periodic(timerInterval, addSecond);
   }
 
-  void AddSecond(_) {
+  void addSecond(_) {
     if (startpressed && !pausepressed) {
       counter++;
     }
@@ -25,23 +25,23 @@ class Stopwatch {
 
   //while active calls tick function every second
   //Duration timerInterval = Duration(seconds: 1)
-  void StartStopwatch() {
+  void startStopwatch() {
     //log("Started Stopwatch");
     startpressed = true;
     pausepressed = false;
   }
 
-  void PauseStopwatch() {
+  void pauseStopwatch() {
     pausepressed = true;
   }
 
-  void ResetStopwatch() {
+  void resetStopwatch() {
     startpressed = false;
     pausepressed = false;
     counter = 0;
   }
 
-  String GetTime() {
+  String getTime() {
     var hoursStr =
         ((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0');
     var minutesStr = ((counter / 60) % 60).floor().toString().padLeft(2, '0');
@@ -49,15 +49,15 @@ class Stopwatch {
     return (hoursStr + ":" + minutesStr + ":" + secondsStr);
   }
 
-  String GetHours() {
+  String getHours() {
     return (((counter / (60 * 60)) % 60).floor().toString().padLeft(2, '0'));
   }
 
-  String GetMinutes() {
+  String getMinutes() {
     return (((counter / 60) % 60).floor().toString().padLeft(2, '0'));
   }
 
-  String GetSeconds() {
+  String getSeconds() {
     return ((counter % 60).floor().toString().padLeft(2, '0'));
   }
 }

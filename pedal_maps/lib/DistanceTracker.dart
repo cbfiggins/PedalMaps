@@ -23,12 +23,12 @@ class DistanceTracker {
     _isTrackingDistance = false;
     positions = new List<LatLng>();
     timerInterval = Duration(seconds: 2);
-    _timer = Timer.periodic(timerInterval, AddDistance);
+    _timer = Timer.periodic(timerInterval, addDistance);
 
     getPermission();
   }
 
-  void StartTrackingDistance() async {
+  void startTrackingDistance() async {
     _currentPosition = await geolocator.Geolocator.getCurrentPosition(
         desiredAccuracy: geolocator.LocationAccuracy.high);
     positions
@@ -36,11 +36,11 @@ class DistanceTracker {
     _isTrackingDistance = true;
   }
 
-  void PauseTrackingDistance() async {
+  void pauseTrackingDistance() async {
     _isTrackingDistance = false;
   }
 
-  void StopTrackingDistance() {
+  void stopTrackingDistance() {
     _totalDistance = 0;
     positions.clear();
     _isTrackingDistance = false;
@@ -67,7 +67,7 @@ class DistanceTracker {
   }
 
   //gets called every 5 seconds
-  void AddDistance(_) async {
+  void addDistance(_) async {
     if (_isTrackingDistance) {
       _currentPosition = await geolocator.Geolocator.getCurrentPosition(
           desiredAccuracy: geolocator.LocationAccuracy.high);
@@ -88,19 +88,19 @@ class DistanceTracker {
     }
   }
 
-  geolocator.Position GetCurrentLocation() {
+  geolocator.Position getCurrentLocation() {
     return _currentPosition;
   }
 
-  Set<Polyline> GetPolylines() {
+  Set<Polyline> getPolylines() {
     return _polylines;
   }
 
-  double PrintDistanceInMiles() {
+  double printDistanceInMiles() {
     return (_totalDistance / 1609);
   }
 
-  List<LatLng> GetPositions() {
+  List<LatLng> getPositions() {
     return positions;
   }
 
