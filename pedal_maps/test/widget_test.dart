@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_test/flutter_test.dart';
 
-import 'file:///C:/Users/vulfe/Documents/Apps/PedalMaps/pedal_maps/lib/start/main.dart';
+import 'package:pedal_maps/start/main.dart';
 
 void main() {
   /*
