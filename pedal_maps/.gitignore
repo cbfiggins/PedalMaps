@@ -30,8 +30,7 @@
 .pub-cache/
 .pub/
 /build/
-/ios/Runner/AppDelegate.swift
-/android/app/src/main/AndroidManifest.xml
+
 
 
 # Web related
