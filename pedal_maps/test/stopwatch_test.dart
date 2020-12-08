@@ -1,4 +1,4 @@
-import "package:pedal_maps/stopwatch.dart";
+import 'file:///C:/Users/vulfe/Documents/Apps/PedalMaps/pedal_maps/lib/Services/stopwatch.dart';
 import "package:test/test.dart";
 
 

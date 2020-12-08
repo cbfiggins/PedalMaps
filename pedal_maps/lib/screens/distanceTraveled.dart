@@ -1,14 +1,11 @@
-import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-//import 'map.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'stopwatch.dart';
-import 'forms.dart';
+import 'package:pedal_maps/services/stopwatch.dart';
+import 'package:pedal_maps/services/forms.dart';
 import 'dart:async';
-import 'DistanceTracker.dart';
-import 'package:flutter/services.dart';
+import 'package:pedal_maps/services/DistanceTracker.dart';
 import 'dart:typed_data';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
@@ -41,7 +38,7 @@ class _DistanceTraveled extends State<DistanceTraveled> {
   //works as constructor for class
   void start() async {
     timerInterval = Duration(seconds: 1);
-    _timer = Timer.periodic(timerInterval, update);
+    Timer _timer = Timer.periodic(timerInterval, update);
     imagePing = await getMarkerImage();
   }
 
@@ -76,7 +73,7 @@ class _DistanceTraveled extends State<DistanceTraveled> {
               new CameraPosition(
                   bearing: 192.8,
                   target: LatLng(newLocalData.latitude, newLocalData.longitude),
-                  zoom: 18.00)));
+                  zoom: 14.00),),);
         }
       });
     }

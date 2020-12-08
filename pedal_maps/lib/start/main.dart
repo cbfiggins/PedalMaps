@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'home.dart';
-import 'logInScreen.dart';
-import 'nearbyTrails.dart';
-import 'distanceTraveled.dart';
+import 'package:pedal_maps/screens/home.dart';
+import 'package:pedal_maps/screens/logInScreen.dart';
+import 'package:pedal_maps/screens/nearbyTrails.dart';
+import 'package:pedal_maps/screens/distanceTraveled.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
