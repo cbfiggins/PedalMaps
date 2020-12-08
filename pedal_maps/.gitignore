@@ -30,6 +30,9 @@
 .pub-cache/
 .pub/
 /build/
+/ios/Runner/AppDelegate.swift
+/android/app/src/main/AndroidManifest.xml
+
 
 # Web related
 lib/generated_plugin_registrant.dart
