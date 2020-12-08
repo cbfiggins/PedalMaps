@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_test/flutter_test.dart';
 
-import 'package:pedal_maps/main.dart';
+import 'package:pedal_maps/start/main.dart';
 
 void main() {
   /*

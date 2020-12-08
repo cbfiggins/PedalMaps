@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'TrailPage.dart';
+import 'package:pedal_maps/screens/trailScreen.dart';
 
 class NearbyTrails extends StatelessWidget {
   @override
@@ -48,6 +48,7 @@ class _ListPageState extends State<ListPage> {
                 color: Colors.white,
                 size: 50.0,
               ),
+
             );
           }
 
