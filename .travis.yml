@@ -2,5 +2,5 @@ language: dart
 dart:
   - stable
 
-script:
-  - dart ./pedal_maps/test/stopwatch_test.dart
+dart_task:
+  - test
