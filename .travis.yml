@@ -1,3 +1,6 @@
 language: dart
+install:
+  - git clone https://github.com/flutter/flutter.git -b stable
+  - ./flutter/bin/flutter doctor
 script:
   - dart pedal_maps/test/stopwatch_test.dart
