@@ -1,7 +1,6 @@
 language: dart
 dart:
   - stable
-before_script:
-  - pub get
+
 script:
   - dart pedal_maps/test/stopwatch_test.dart
