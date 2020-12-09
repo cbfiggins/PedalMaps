@@ -35,7 +35,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="external.system.task.project.file.to.start" value="$PROJECT_DIR$/pedal_maps/android/gradle/wrapper" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pedal_maps" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
