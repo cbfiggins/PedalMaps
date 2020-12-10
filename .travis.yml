@@ -8,7 +8,7 @@ install:
   - ./flutter/bin/flutter doctor
 script:
   - ./flutter/bin/flutter pub get
-  - pub run test pedal_maps/test/stopwatch_test.dart
+  - ./flutter/bin/flutter pub run test pedal_maps/test/stopwatch_test.dart
 cache:
   directories:
     - $HOME/.pub-cache
