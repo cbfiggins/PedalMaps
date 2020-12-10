@@ -1,4 +1,4 @@
-import 'package:pedal_maps/lib/services/stopwatch.dart';
+import 'package:pedal_maps/pedal_maps/services/stopwatch.dart';
 import "package:test/test.dart";
 
 
